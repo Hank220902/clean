@@ -1,6 +1,6 @@
 syntax = "proto3";  // 定義要使用的 protocol buffer 版本
 
-package grpc;  // for name space
+package todo;  // for name space
 //option go_package = "proto/todolist";  // generated code 的 full Go import path
 //import "google/protobuf/timestamp.proto";
 
@@ -19,61 +19,61 @@ message CreateResponse {
     int32 resMessage =1;
 }
 
-message GetFilterRequest{
-  string email=1;
-  string status=2;
-  string finishedCondition =3;
+// message GetFilterRequest{
+//   string email=1;
+//   string status=2;
+//   string finishedCondition =3;
 
-}
-message GetFilterResponse {
-  repeated GetResult GetResult=1;
-}
+// }
+// message GetFilterResponse {
+//   repeated GetResult GetResult=1;
+// }
 
-message GetRequest {
-  string email=1;
-}
+// message GetRequest {
+//   string email=1;
+// }
 
-message GetResponse {
-  repeated GetResult GetResult=1;
-}
+// message GetResponse {
+//   repeated GetResult GetResult=1;
+// }
 
-message GetResult{
-  string id=1;
-  string matter=2;
-  string endTime=3;
-  string finishedCondition=4;
-  string status=5;
-  string email=6;
-  string note =7;
-  string createTime=8;
-  string updateTime=9;
-}
+// message GetResult{
+//   string id=1;
+//   string matter=2;
+//   string endTime=3;
+//   string finishedCondition=4;
+//   string status=5;
+//   string email=6;
+//   string note =7;
+//   string createTime=8;
+//   string updateTime=9;
+// }
 
-message UpdateRequest {
-    string id = 1;
-    string finishedCondition = 2;
-    string note = 3;
-    string email = 4;
-}  
+// message UpdateRequest {
+//     string id = 1;
+//     string finishedCondition = 2;
+//     string note = 3;
+//     string email = 4;
+// }  
 
-message UpdateResponse {
-    int32 resMessage =1;
+// message UpdateResponse {
+//     int32 resMessage =1;
 
-}
+// }
 
-message DeleteRequest {
-  string id = 1;
-  string email=2;
-}
+// message DeleteRequest {
+//   string id = 1;
+//   string email=2;
+// }
 
-message DeleteResponse {
-    int32 resMessage =1;
-}
+// message DeleteResponse {
+//     int32 resMessage =1;
+// }
 
 service TodoService {
   rpc Create(CreateRequest) returns (CreateResponse);
-  rpc GetAll(GetRequest) returns (GetResponse);
-  rpc Update(UpdateRequest) returns (UpdateResponse);
-  rpc Delete(DeleteRequest) returns (DeleteResponse);
-  rpc GetFilter(GetFilterRequest) returns (GetFilterResponse);
+  // rpc GetAll(GetRequest) returns (GetResponse);
+  // rpc Update(UpdateRequest) returns (UpdateResponse);
+  // rpc Delete(DeleteRequest) returns (DeleteResponse);
+  // rpc GetFilter(GetFilterRequest) returns (GetFilterResponse);
 }

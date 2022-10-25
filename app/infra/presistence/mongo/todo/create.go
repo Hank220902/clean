@@ -7,7 +7,7 @@ import (
 	"log"
 )
 
-func Create(ctx context.Context, data *model.Todo) error {
+func(r *repo) Create(ctx context.Context, data *model.Todo) error {
 	_, err := mongo.TodoCollection.InsertOne(ctx, data)
 	if err != nil {
 		log.Fatal(err)
