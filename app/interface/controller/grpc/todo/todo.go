@@ -3,12 +3,12 @@ package todo
 import (
 	pb "clean/app/interface/controller/grpc/protobuf"
 	"context"
-	"fmt"
 	"net"
 
-	ser "clean/app/domain/service/todo"
+	service "clean/app/domain/service/todo"
 	repo "clean/app/infra/presistence/mongo/todo"
 	"clean/app/usecase/todo/create"
+	"clean/app/usecase/todo/getall"
 
 	"google.golang.org/grpc"
 )
@@ -20,18 +20,12 @@ const (
 	emailExists int = 4
 )
 
-type todoService struct {
-	pb.UnimplementedTodoServiceServer
-}
+
 
 func (s *server) Create(ctx context.Context, data *pb.CreateRequest) (*pb.CreateResponse, error) {
-	fmt.Println("qqqqqasdadadasd")
-	fmt.Println(data)
-	fmt.Println("qqqqqasdad12313")
-	fmt.Println(convertToCreateInput(data))
-	fmt.Println(s.createUsecase)
+
 	_, err := s.createUsecase.Create(ctx, convertToCreateInput(data))
-	fmt.Println("aaaaaa")
+
 	if err != nil {
 		return new(pb.CreateResponse), err
 	}
@@ -39,13 +33,22 @@ func (s *server) Create(ctx context.Context, data *pb.CreateRequest) (*pb.Create
 	return &pb.CreateResponse{ResMessage: int32(success)}, nil
 }
 
+func (s *server) GetAll(ctx context.Context, data *pb.GetRequest) (*pb.GetResponse,error){
+	result,err :=s.getAllUsecase.GetAll(ctx,convertToGetAllInput(data))
+	if err!= nil {
+        return new(pb.GetResponse),err
+	}
+	return &pb.GetResponse{GetResult: convertGetTodosToPb(result)},nil
+}
+
 func GrpcServer() {
 	rpcs := grpc.NewServer()
 
 	NewRepo := repo.NewRepository()
-	NewService := ser.NewTodoService()
+	NewService := service.NewTodoService()
 	NewCreateUsecase := create.NewCreateUsecase(NewRepo, NewService)
-	pb.RegisterTodoServiceServer(rpcs, NewServer(NewCreateUsecase))
+	NewGetAllUsecase := getall.NewGetAllUsecase(NewRepo, NewService)
+	pb.RegisterTodoServiceServer(rpcs, NewServer(NewCreateUsecase,NewGetAllUsecase))
 
 	lis, err := net.Listen("tcp", ":50051")
 	if err != nil {

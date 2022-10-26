@@ -24,11 +24,19 @@ func Create(ctx iris.Context) {
 		Status:            "",
 	}
 
-	result := client.Create(RequestContext(ctx), &input)
+	result := client.Create(requestContext(ctx), &input)
 
 	ctx.JSON(result)
 
 }
-func RequestContext(ctx iris.Context) context.Context {
+func requestContext(ctx iris.Context) context.Context {
 	return ctx.Request().Context()
+}
+
+func GetAll(ctx iris.Context){
+	paramsEmail := ctx.URLParam("email")
+
+	result := client.GetAll(requestContext(ctx),paramsEmail)
+	
+	ctx.JSON(result)
 }

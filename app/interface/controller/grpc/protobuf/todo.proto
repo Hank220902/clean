@@ -29,25 +29,25 @@ message CreateResponse {
 //   repeated GetResult GetResult=1;
 // }
 
-// message GetRequest {
-//   string email=1;
-// }
+message GetRequest {
+  string email=1;
+}
 
-// message GetResponse {
-//   repeated GetResult GetResult=1;
-// }
+message GetResponse {
+  repeated GetResult GetResult=1;
+}
 
-// message GetResult{
-//   string id=1;
-//   string matter=2;
-//   string endTime=3;
-//   string finishedCondition=4;
-//   string status=5;
-//   string email=6;
-//   string note =7;
-//   string createTime=8;
-//   string updateTime=9;
-// }
+message GetResult{
+  string id=1;
+  string matter=2;
+  string endTime=3;
+  string finishedCondition=4;
+  string status=5;
+  string email=6;
+  string note =7;
+  string createTime=8;
+  string updateTime=9;
+}
 
 // message UpdateRequest {
 //     string id = 1;
@@ -72,7 +72,7 @@ message CreateResponse {
 
 service TodoService {
   rpc Create(CreateRequest) returns (CreateResponse);
-  // rpc GetAll(GetRequest) returns (GetResponse);
+  rpc GetAll(GetRequest) returns (GetResponse);
   // rpc Update(UpdateRequest) returns (UpdateResponse);
   // rpc Delete(DeleteRequest) returns (DeleteResponse);
   // rpc GetFilter(GetFilterRequest) returns (GetFilterResponse);

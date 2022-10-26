@@ -8,3 +8,7 @@ type CreateInput struct {
 	Email             string `json:"email" bson:"email"`
 
 }
+
+type GetAllInput struct{
+	Email string `json:"email" bson:"email"`
+}

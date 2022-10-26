@@ -14,7 +14,7 @@ func Todo(app *iris.Application) {
 	api := app.Party("/api")
 	{
 		api.Post("/todo",middle.Create)
-		// api.Get("/todolist", controllers.GetFilterToDoList)
+		api.Get("/todo", middle.GetAll)
 		// api.Post("/todolist", controllers.CreateToDoList)
 		// api.Get("/manytodolist", controllers.GetAllToDoList)
 		// api.Put("/todolist", controllers.UpdateToDoList)

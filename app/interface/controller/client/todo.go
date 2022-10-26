@@ -38,3 +38,14 @@ func Create(ctx context.Context, in *CreateInput) int32 {
 	return result.GetResMessage()
 	// return result.GetResMessage()
 }
+
+func GetAll(ctx context.Context, email string)*pb.GetResponse{
+	result,err := todoClient.GetAll(ctx,&pb.GetRequest{
+		Email: email,
+	})
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println(result.GetGetResult())
+	return result
+}
