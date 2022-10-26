@@ -11,9 +11,7 @@ import (
 	"google.golang.org/grpc"
 )
 
-// type cServer struct {
-// 	*todo.Server
-// }
+
 
 var todoClient pb.TodoServiceClient
 

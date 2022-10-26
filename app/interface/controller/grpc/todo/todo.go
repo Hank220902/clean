@@ -6,6 +6,10 @@ import (
 	"fmt"
 	"net"
 
+	ser "clean/app/domain/service/todo"
+	repo "clean/app/infra/presistence/mongo/todo"
+	"clean/app/usecase/todo/create"
+
 	"google.golang.org/grpc"
 )
 
@@ -37,7 +41,11 @@ func (s *server) Create(ctx context.Context, data *pb.CreateRequest) (*pb.Create
 
 func GrpcServer() {
 	rpcs := grpc.NewServer()
-	pb.RegisterTodoServiceServer(rpcs, new(server))
+
+	NewRepo := repo.NewRepository()
+	NewService := ser.NewTodoService()
+	NewCreateUsecase := create.NewCreateUsecase(NewRepo, NewService)
+	pb.RegisterTodoServiceServer(rpcs, NewServer(NewCreateUsecase))
 
 	lis, err := net.Listen("tcp", ":50051")
 	if err != nil {
