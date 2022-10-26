@@ -22,3 +22,8 @@ type HaveIDTodo struct {
 	CreateTime        time.Time `json:"createTime" bson:"createTime"`
 	UpdateTime        time.Time `json:"updateTime" bson:"updateTime"`
 }
+
+type Delete struct {
+	ID    string `json:"_id" bson:"_id"`
+	Email string `json:"email" bson:"email"`
+}

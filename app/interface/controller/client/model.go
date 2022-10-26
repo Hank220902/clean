@@ -6,9 +6,13 @@ type CreateInput struct {
 	FinishedCondition string `json:"finishedCondition" bson:"finishedCondition"`
 	Status            string `json:"status" bson:"status"`
 	Email             string `json:"email" bson:"email"`
-
 }
 
-type GetAllInput struct{
+type GetAllInput struct {
+	Email string `json:"email" bson:"email"`
+}
+
+type DeleteInput struct {
+	Id    string `json:"id" bson:"id"`
 	Email string `json:"email" bson:"email"`
 }

@@ -49,3 +49,14 @@ func GetAll(ctx context.Context, email string)*pb.GetResponse{
 	fmt.Println(result.GetGetResult())
 	return result
 }
+
+func Delete(ctx context.Context, in *DeleteInput)*pb.DeleteResponse{
+	result,err :=todoClient.Delete(ctx,&pb.DeleteRequest{
+		Id: in.Id,
+		Email: in.Email,
+	})
+	if err!= nil {
+        panic(err)
+    }
+	return result
+}

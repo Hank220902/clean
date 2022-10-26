@@ -4,6 +4,7 @@ import (
 	pb "clean/app/interface/controller/grpc/protobuf"
 	"clean/app/usecase/todo/create"
 	"clean/app/usecase/todo/getall"
+	"clean/app/usecase/todo/delete"
 	"time"
 )
 
@@ -21,4 +22,11 @@ func convertToGetAllInput(in *pb.GetRequest) *getall.GetAllInput {
 	return &getall.GetAllInput{
 		Email: in.Email,
 	}
+}
+
+func convertToDeleteInput(in *pb.DeleteRequest) *delete.DeleteInput {
+	return &delete.DeleteInput{
+        ID: in.Id,
+		Email:in.Email,
+    }
 }

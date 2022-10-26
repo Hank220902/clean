@@ -26,3 +26,10 @@ func (u *todoService) NewTodo(ctx context.Context, Matter, EndTime, FinishedCond
 // 	email := Email
 // 	return email
 // }
+
+func(u *todoService) DeleteData(ctx context.Context, Email string,Id string)(*model.Delete){
+	var delete = new(model.Delete)
+    delete.Email = Email
+    delete.ID = Id
+    return delete
+}

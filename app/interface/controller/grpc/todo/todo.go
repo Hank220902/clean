@@ -9,6 +9,7 @@ import (
 	repo "clean/app/infra/presistence/mongo/todo"
 	"clean/app/usecase/todo/create"
 	"clean/app/usecase/todo/getall"
+	"clean/app/usecase/todo/delete"
 
 	"google.golang.org/grpc"
 )
@@ -41,6 +42,14 @@ func (s *server) GetAll(ctx context.Context, data *pb.GetRequest) (*pb.GetRespon
 	return &pb.GetResponse{GetResult: convertGetTodosToPb(result)},nil
 }
 
+func (s *server) Delete(ctx context.Context, data *pb.DeleteRequest) (*pb.DeleteResponse, error) {
+	_,err :=s.deleteUsecase.Delete(ctx,convertToDeleteInput(data))
+	if err!= nil {
+        return new(pb.DeleteResponse),err
+	}
+	return &pb.DeleteResponse{ResMessage: int32(success)},nil
+}
+
 func GrpcServer() {
 	rpcs := grpc.NewServer()
 
@@ -48,7 +57,8 @@ func GrpcServer() {
 	NewService := service.NewTodoService()
 	NewCreateUsecase := create.NewCreateUsecase(NewRepo, NewService)
 	NewGetAllUsecase := getall.NewGetAllUsecase(NewRepo, NewService)
-	pb.RegisterTodoServiceServer(rpcs, NewServer(NewCreateUsecase,NewGetAllUsecase))
+	NewDeleteUsecase := delete.NewDeleteUsecase(NewRepo, NewService)
+	pb.RegisterTodoServiceServer(rpcs, NewServer(NewCreateUsecase,NewGetAllUsecase,NewDeleteUsecase))
 
 	lis, err := net.Listen("tcp", ":50051")
 	if err != nil {

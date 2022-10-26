@@ -8,4 +8,5 @@ import (
 type TodoRepository interface {
 	Create(ctx context.Context, todo *model.Todo) error
 	GetAll(ctx context.Context, email string) ([]*model.HaveIDTodo, error)
+	Delete(ctx context.Context, delete *model.Delete) int
 }
