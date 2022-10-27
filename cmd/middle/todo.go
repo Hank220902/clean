@@ -2,13 +2,26 @@ package middle
 
 import (
 	client "clean/app/interface/controller/client/todo"
+	"clean/app/infra/token/jwt"
 
 	"context"
 
 	"github.com/kataras/iris/v12"
 )
 
+const(
+	success int = 1
+	fail int =2
+	tokenError int = 3
+	emailExists int = 4
+)
+
 func Create(ctx iris.Context) {
+	email := jwt.MyAuthenticatedHandler(ctx)
+	if email == "token not found" {
+		ctx.JSON(tokenError)
+		return
+	}
 
 	var Todo client.CreateInput
 	if err := ctx.ReadJSON(&Todo); err != nil {
@@ -19,7 +32,7 @@ func Create(ctx iris.Context) {
 		Matter:            Todo.Matter,
 		EndTime:           Todo.EndTime,
 		FinishedCondition: Todo.FinishedCondition,
-		Email:             Todo.Email,
+		Email:             email,
 		Status:            "",
 	}
 
@@ -33,10 +46,14 @@ func requestContext(ctx iris.Context) context.Context {
 }
 
 func GetAll(ctx iris.Context) {
+	email := jwt.MyAuthenticatedHandler(ctx)
+	if email == "token not found" {
+		ctx.JSON(tokenError)
+		return
+	}
 
-	paramsEmail := ctx.URLParam("email")
 	input := client.GetAllInput{
-		Email: paramsEmail,
+		Email: email,
 	}
 
 	result := client.GetAll(requestContext(ctx), &input)
@@ -45,6 +62,11 @@ func GetAll(ctx iris.Context) {
 }
 
 func Delete(ctx iris.Context) {
+	email := jwt.MyAuthenticatedHandler(ctx)
+	if email == "token not found" {
+		ctx.JSON(tokenError)
+		return
+	}
 	var Input client.DeleteInput
 	if err := ctx.ReadJSON(&Input); err != nil {
 		panic(err.Error())
@@ -52,7 +74,7 @@ func Delete(ctx iris.Context) {
 	paramsId := ctx.URLParam("id")
 	data := client.DeleteInput{
 		Id:    paramsId,
-		Email: Input.Email,
+		Email: email,
 	}
 
 	result := client.Delete(requestContext(ctx), &data)
@@ -60,13 +82,18 @@ func Delete(ctx iris.Context) {
 }
 
 func Update(ctx iris.Context) {
+	email := jwt.MyAuthenticatedHandler(ctx)
+	if email == "token not found" {
+		ctx.JSON(tokenError)
+		return
+	}
 	var Input client.UpdateInput
 	if err := ctx.ReadJSON(&Input); err != nil {
 		panic(err.Error())
 	}
 	data := client.UpdateInput{
 		Id:                Input.Id,
-		Email:             Input.Email,
+		Email:             email,
 		FinishedCondition: Input.FinishedCondition,
 		Note:              Input.Note,
 	}
