@@ -1,7 +1,8 @@
 package main
 
 import (
-	mon "clean/app/infra/presistence/mongo"
+	"clean/app/infra/presistence/mongo"
+	"clean/app/infra/memory/redis"
 	"clean/app/interface/controller/grpc"
 	// "clean/cmd"
 	"clean/cmd/route"
@@ -13,7 +14,9 @@ import (
 func init() {
 	go grpc.GrpcServer()
 	// go cmd.Server()
-	mon.Connect()
+	mongo.Connect()
+	redis.Redis()
+	
 }
 
 func main() {

@@ -7,4 +7,5 @@ import (
 
 type UserRepository interface {
 	Register(ctx context.Context, todo *model.Register) int
+	Login(ctx context.Context, todo *model.Login)string
 }

@@ -30,3 +30,18 @@ func Register(ctx iris.Context) {
 
 	ctx.JSON(result)
 }
+
+func Login(ctx iris.Context){
+	var LoginData client.LoginInput
+	if err := ctx.ReadJSON(&LoginData); err != nil {
+		panic(err.Error())
+	}
+	input := client.LoginInput{
+		Email: LoginData.Email,
+		Password: LoginData.Password,
+	}
+	result := client.Login(requestContext(ctx), &input)
+	ctx.JSON(result)
+}
+
+

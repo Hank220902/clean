@@ -12,3 +12,10 @@ func (u *userService) RegisterData(ctx context.Context, Name, Password, Email st
 	RegisterData.Password= Password
 	return RegisterData
 }
+
+func(u *userService)LoginData(ctx context.Context,Email, Password string) *model.Login{
+	var LoginData = new(model.Login)
+	LoginData.Email = Email
+	LoginData.Password = Password
+	return LoginData
+}

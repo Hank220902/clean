@@ -1,11 +1,12 @@
-package middle
+package jwt
 
 import (
 	"context"
 	"fmt"
 	"time"
-
 	"clean/app/infra/memory/redis"
+
+
 
 	"github.com/iris-contrib/middleware/jwt"
 	"github.com/kataras/iris/v12"

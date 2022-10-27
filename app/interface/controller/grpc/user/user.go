@@ -17,3 +17,11 @@ func (s *userServer) Register(ctx context.Context, data *pb.RegisterRequest) (*p
 	}
 	return &pb.RegisterResponse{ResMessage: int32(result.Message)}, nil
 }
+
+func(s *userServer) Login(ctx context.Context,data *pb.LoginRequest) (*pb.LoginResponse, error) {
+	result, err := s.loginUsecase.Login(ctx,convertToLoginInput(data))
+	if err != nil {
+		return new(pb.LoginResponse),err
+	}
+	return &pb.LoginResponse{ResMessage: result.Token},nil
+}

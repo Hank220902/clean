@@ -32,4 +32,16 @@ func Register(ctx context.Context, in *RegisterInput) int32 {
 	return result.GetResMessage()
 }
 
+func Login(ctx context.Context, in *LoginInput) string {
+	result, err := userClient.Login(ctx,&pb.LoginRequest{
+		Email: in.Email,
+		Password: in.Password,
+	})
+	if err != nil {
+		panic(err)
+	}
+	return result.GetResMessage()
+
+}
+
 
