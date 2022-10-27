@@ -2,7 +2,7 @@ package main
 
 import (
 	mon "clean/app/infra/presistence/mongo"
-	"clean/app/interface/controller/grpc/todo"
+	"clean/app/interface/controller/grpc"
 	// "clean/cmd"
 	"clean/cmd/route"
 	"fmt"
@@ -11,7 +11,7 @@ import (
 )
 
 func init() {
-	go todo.GrpcServer()
+	go grpc.GrpcServer()
 	// go cmd.Server()
 	mon.Connect()
 }
@@ -22,7 +22,8 @@ func main() {
 	fmt.Println("hello")
 
 	route.Todo(app)
-
+	route.User(app)
+	
 	//cmd.Execute()
 
 	app.Listen(":3000")

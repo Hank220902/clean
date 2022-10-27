@@ -5,18 +5,21 @@ import (
 	"clean/app/usecase/todo/create"
 	"clean/app/usecase/todo/getall"
 	"clean/app/usecase/todo/delete"
+	"clean/app/usecase/todo/update"
 )
 
-type server struct {
+type todoServer struct {
 	createUsecase create.CreateUsecase
 	getAllUsecase getall.GetAllUsecase
 	deleteUsecase delete.DeleteUsecase
+	updateUsecase update.UpdateUsecase
 }
 
-func NewServer(createUsecase create.CreateUsecase,getAllUsecase getall.GetAllUsecase,deleteUsecase delete.DeleteUsecase) pb.TodoServiceServer {
-	return &server{
+func NewTodoServer(createUsecase create.CreateUsecase,getAllUsecase getall.GetAllUsecase,deleteUsecase delete.DeleteUsecase,updateUsecase update.UpdateUsecase) pb.TodoServiceServer {
+	return &todoServer{
 		createUsecase: createUsecase,
 		getAllUsecase: getAllUsecase,
 		deleteUsecase: deleteUsecase,
+		updateUsecase: updateUsecase,
 	}
 }

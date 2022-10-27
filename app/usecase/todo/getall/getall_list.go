@@ -2,7 +2,7 @@ package getall
 
 import model "clean/app/domain/model/todo"
 
-func convertGetAllListToOutput(in []*model.HaveIDTodo) []*GetAllOutput {
+func convertGetAllListToOutput(in []*model.Get) []*GetAllOutput {
 	ans := make([]*GetAllOutput, len(in))
 	for i, v := range in {
 		ans[i] = converTodo(v)
@@ -11,7 +11,7 @@ func convertGetAllListToOutput(in []*model.HaveIDTodo) []*GetAllOutput {
 
 }
 
-func converTodo(in *model.HaveIDTodo) *GetAllOutput {
+func converTodo(in *model.Get) *GetAllOutput {
 	if in == nil {
 		return new(GetAllOutput)
 	}

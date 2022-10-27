@@ -3,15 +3,6 @@ package todo
 import (
 	pb "clean/app/interface/controller/grpc/protobuf"
 	"context"
-	"net"
-
-	service "clean/app/domain/service/todo"
-	repo "clean/app/infra/presistence/mongo/todo"
-	"clean/app/usecase/todo/create"
-	"clean/app/usecase/todo/getall"
-	"clean/app/usecase/todo/delete"
-
-	"google.golang.org/grpc"
 )
 
 const (
@@ -21,9 +12,7 @@ const (
 	emailExists int = 4
 )
 
-
-
-func (s *server) Create(ctx context.Context, data *pb.CreateRequest) (*pb.CreateResponse, error) {
+func (s *todoServer) Create(ctx context.Context, data *pb.CreateRequest) (*pb.CreateResponse, error) {
 
 	_, err := s.createUsecase.Create(ctx, convertToCreateInput(data))
 
@@ -34,37 +23,27 @@ func (s *server) Create(ctx context.Context, data *pb.CreateRequest) (*pb.Create
 	return &pb.CreateResponse{ResMessage: int32(success)}, nil
 }
 
-func (s *server) GetAll(ctx context.Context, data *pb.GetRequest) (*pb.GetResponse,error){
-	result,err :=s.getAllUsecase.GetAll(ctx,convertToGetAllInput(data))
-	if err!= nil {
-        return new(pb.GetResponse),err
-	}
-	return &pb.GetResponse{GetResult: convertGetTodosToPb(result)},nil
-}
-
-func (s *server) Delete(ctx context.Context, data *pb.DeleteRequest) (*pb.DeleteResponse, error) {
-	_,err :=s.deleteUsecase.Delete(ctx,convertToDeleteInput(data))
-	if err!= nil {
-        return new(pb.DeleteResponse),err
-	}
-	return &pb.DeleteResponse{ResMessage: int32(success)},nil
-}
-
-func GrpcServer() {
-	rpcs := grpc.NewServer()
-
-	NewRepo := repo.NewRepository()
-	NewService := service.NewTodoService()
-	NewCreateUsecase := create.NewCreateUsecase(NewRepo, NewService)
-	NewGetAllUsecase := getall.NewGetAllUsecase(NewRepo, NewService)
-	NewDeleteUsecase := delete.NewDeleteUsecase(NewRepo, NewService)
-	pb.RegisterTodoServiceServer(rpcs, NewServer(NewCreateUsecase,NewGetAllUsecase,NewDeleteUsecase))
-
-	lis, err := net.Listen("tcp", ":50051")
+func (s *todoServer) GetAll(ctx context.Context, data *pb.GetRequest) (*pb.GetResponse, error) {
+	result, err := s.getAllUsecase.GetAll(ctx, convertToGetAllInput(data))
 	if err != nil {
-		panic(err)
+		return new(pb.GetResponse), err
 	}
-	defer lis.Close()
-	rpcs.Serve(lis)
+	return &pb.GetResponse{GetResult: convertGetTodosToPb(result)}, nil
+}
 
+func (s *todoServer) Delete(ctx context.Context, data *pb.DeleteRequest) (*pb.DeleteResponse, error) {
+	result, err := s.deleteUsecase.Delete(ctx, convertToDeleteInput(data))
+	if err != nil {
+		return new(pb.DeleteResponse), err
+	}
+	return &pb.DeleteResponse{ResMessage: int32(result.Message)}, nil
+}
+
+func (s *todoServer) Update(ctx context.Context, data *pb.UpdateRequest) (*pb.UpdateResponse, error) {
+	result, err := s.updateUsecase.Update(ctx, convertToUpdateInput(data))
+
+	if err != nil {
+		return new(pb.UpdateResponse), err
+	}
+	return &pb.UpdateResponse{ResMessage: int32(result.Message)}, err
 }

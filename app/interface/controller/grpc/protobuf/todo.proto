@@ -1,6 +1,6 @@
 syntax = "proto3";  // 定義要使用的 protocol buffer 版本
 
-package todo;  // for name space
+package grpc;  // for name space
 //option go_package = "proto/todolist";  // generated code 的 full Go import path
 //import "google/protobuf/timestamp.proto";
 
@@ -49,17 +49,17 @@ message GetResult{
   string updateTime=9;
 }
 
-// message UpdateRequest {
-//     string id = 1;
-//     string finishedCondition = 2;
-//     string note = 3;
-//     string email = 4;
-// }  
+message UpdateRequest {
+    string id = 1;
+    string finishedCondition = 2;
+    string note = 3;
+    string email = 4;
+}  
 
-// message UpdateResponse {
-//     int32 resMessage =1;
+message UpdateResponse {
+    int32 resMessage =1;
 
-// }
+}
 
 message DeleteRequest {
   string id = 1;
@@ -73,7 +73,7 @@ message DeleteResponse {
 service TodoService {
   rpc Create(CreateRequest) returns (CreateResponse);
   rpc GetAll(GetRequest) returns (GetResponse);
-  // rpc Update(UpdateRequest) returns (UpdateResponse);
+  rpc Update(UpdateRequest) returns (UpdateResponse);
   rpc Delete(DeleteRequest) returns (DeleteResponse);
   // rpc GetFilter(GetFilterRequest) returns (GetFilterResponse);
 }

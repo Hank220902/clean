@@ -1,6 +1,6 @@
 package model
 
-type User struct {
+type Register struct {
 	Name     string `json:"name" bson:"name"`
 	Password string `json:"password" bson:"password"`
 	Email    string `json:"email" bson:"email"`

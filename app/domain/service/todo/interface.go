@@ -6,10 +6,10 @@ import (
 )
 
 type TodoService interface {
-	NewTodo(ctx context.Context, Matter, EndTime, FinishedCondition, Email string) (*model.Todo, error)
+	CreateData(ctx context.Context, Matter, EndTime, FinishedCondition, Email string) (*model.Create, error)
 	// GetAll(ctx context.Context, todo *model.HaveIDTodo) *model.HaveIDTodo
 	DeleteData(ctx context.Context, Id,Email string) (*model.Delete)
-	// UpdateTodo(ctx context.Context, todo *model.HaveIDTodo) string
+	UpdateData(ctx context.Context, Email,Id,FinishedCondition,Note string) *model.Update
 }
 type todoService struct {
 }

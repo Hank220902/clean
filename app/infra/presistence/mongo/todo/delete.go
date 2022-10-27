@@ -23,8 +23,8 @@ func (r *repo) Delete(ctx context.Context, data *model.Delete) int {
 	}
 	fmt.Printf("Deleted %v documents in the trainers collection\n", deleteResult.DeletedCount)
 	if deleteResult.DeletedCount == 0 {
-		return 2
+		return fail
 	}
 
-	return 1
+	return success
 }

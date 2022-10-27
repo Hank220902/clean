@@ -1,8 +1,7 @@
 package middle
 
 import (
-	"clean/app/interface/controller/client"
-	"fmt"
+	client "clean/app/interface/controller/client/todo"
 
 	"context"
 
@@ -34,9 +33,13 @@ func requestContext(ctx iris.Context) context.Context {
 }
 
 func GetAll(ctx iris.Context) {
-	paramsEmail := ctx.URLParam("email")
 
-	result := client.GetAll(requestContext(ctx), paramsEmail)
+	paramsEmail := ctx.URLParam("email")
+	input := client.GetAllInput{
+		Email: paramsEmail,
+	}
+
+	result := client.GetAll(requestContext(ctx), &input)
 
 	ctx.JSON(result)
 }
@@ -51,7 +54,22 @@ func Delete(ctx iris.Context) {
 		Id:    paramsId,
 		Email: Input.Email,
 	}
-	fmt.Println(data)
+
 	result := client.Delete(requestContext(ctx), &data)
 	ctx.JSON(result.ResMessage)
+}
+
+func Update(ctx iris.Context) {
+	var Input client.UpdateInput
+	if err := ctx.ReadJSON(&Input); err != nil {
+		panic(err.Error())
+	}
+	data := client.UpdateInput{
+		Id:                Input.Id,
+		Email:             Input.Email,
+		FinishedCondition: Input.FinishedCondition,
+		Note:              Input.Note,
+	}
+	result := client.Update(requestContext(ctx), &data)
+	ctx.JSON(result)
 }

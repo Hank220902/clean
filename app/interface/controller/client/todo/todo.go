@@ -39,9 +39,9 @@ func Create(ctx context.Context, in *CreateInput) int32 {
 	// return result.GetResMessage()
 }
 
-func GetAll(ctx context.Context, email string)*pb.GetResponse{
+func GetAll(ctx context.Context, in *GetAllInput)*pb.GetResponse{
 	result,err := todoClient.GetAll(ctx,&pb.GetRequest{
-		Email: email,
+		Email: in.Email,
 	})
 	if err != nil {
 		panic(err)
@@ -60,3 +60,18 @@ func Delete(ctx context.Context, in *DeleteInput)*pb.DeleteResponse{
     }
 	return result
 }
+
+func Update(ctx context.Context, in *UpdateInput)*pb.UpdateResponse{
+	result,err :=todoClient.Update(ctx,&pb.UpdateRequest{
+		Id: in.Id,
+		Email: in.Email,
+		FinishedCondition: in.FinishedCondition,
+		Note: in.Note,
+	})
+	if err!= nil {
+        panic(err)
+    }
+	return result
+}
+
+

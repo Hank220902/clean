@@ -29,13 +29,13 @@ func (u *createUsecase) Create(ctx context.Context, input *CreateInput) (*Create
 
 	output := new(CreateOutput)
 
-	todo, err := u.todoService.NewTodo(ctx, input.Matter, input.EndTime, input.FinishedCondition, input.Email)
+	data, err := u.todoService.CreateData(ctx, input.Matter, input.EndTime, input.FinishedCondition, input.Email)
 
 	if err != nil {
 		return nil, err
 	}
 
-	if err := u.todoRepo.Create(ctx, todo); err != nil {
+	if err := u.todoRepo.Create(ctx, data); err != nil {
 		return nil, err
 	}
 

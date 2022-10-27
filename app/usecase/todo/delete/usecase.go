@@ -22,7 +22,7 @@ func (u *deleteUsecase) Delete(ctx context.Context, input *DeleteInput) (*Delete
 
 	output := new(DeleteOutput)
 
-	data := u.todoService.DeleteData(ctx, input.Email, input.ID)
+	data := u.todoService.DeleteData(ctx, input.Email, input.Id)
 
 	result := u.todoRepo.Delete(ctx, data)
 	output.Message = result

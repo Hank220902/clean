@@ -16,3 +16,11 @@ type DeleteInput struct {
 	Id    string `json:"id" bson:"id"`
 	Email string `json:"email" bson:"email"`
 }
+
+
+type UpdateInput struct {
+	Id string `json:"_id" bson:"_id"`
+	Email string `json:"email" bson:"email"`
+	FinishedCondition string    `json:"finishedCondition" bson:"finishedCondition"`
+	Note              string    `json:"note" bson:"note"`
+}
