@@ -19,10 +19,7 @@ func Todo(app *iris.Application) {
 		api.Get("/todofilter", middle.GetFilter)
 		api.Delete("/todo", middle.Delete)
 		api.Put("/todo", middle.Update)
-		// api.Post("/todolist", controllers.CreateToDoList)
-		// api.Get("/manytodolist", controllers.GetAllToDoList)
-		// api.Put("/todolist", controllers.UpdateToDoList)
-		// api.Delete("/todolist", controllers.DeleteToDoList)
+
 
 	}
 
