@@ -11,6 +11,10 @@ import (
 	"github.com/iris-contrib/middleware/jwt"
 	"github.com/kataras/iris/v12"
 )
+const(
+	success int = 1
+	fail int=2
+)
 
 var mySecret = []byte("secret")
 
@@ -81,4 +85,19 @@ func MyAuthenticatedHandler(ctx iris.Context) string {
 		return "token not found"
 	}
 
+}
+
+func DeleteToken(ctx iris.Context,email string) int {
+	var Redis = redis.Redis()
+	
+	n, err := Redis.Exists(ctx, email).Result()
+	if err != nil {
+		panic(err)
+	}
+	if n > 0 {
+		n := Redis.Del(ctx, email)
+		fmt.Println(n.Result())
+		return success
+	}
+	return fail	
 }

@@ -4,6 +4,7 @@ import (
 	"clean/app/infra/encryption/bcrypt"
 	client "clean/app/interface/controller/client/user"
 	"fmt"
+	"clean/app/infra/token/jwt"
 
 	"github.com/kataras/iris/v12"
 )
@@ -41,6 +42,12 @@ func Login(ctx iris.Context){
 		Password: LoginData.Password,
 	}
 	result := client.Login(requestContext(ctx), &input)
+	ctx.JSON(result)
+}
+
+func Logout(ctx iris.Context){
+	email := jwt.MyAuthenticatedHandler(ctx)
+	result := jwt.DeleteToken(ctx,email)
 	ctx.JSON(result)
 }
 
