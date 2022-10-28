@@ -34,6 +34,7 @@ func (r *repo) GetAll(ctx context.Context, email string) ([]*model.Get, error) {
 		zone := time.FixedZone("", +8*60*60)
 		result.CreateTime = result.CreateTime.In(zone)
 		result.UpdateTime = result.UpdateTime.In(zone)
+		result.EndTime = result.EndTime.In(zone)
 		
 
 		results = append(results, &result)

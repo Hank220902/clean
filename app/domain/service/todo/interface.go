@@ -10,6 +10,7 @@ type TodoService interface {
 	// GetAll(ctx context.Context, todo *model.HaveIDTodo) *model.HaveIDTodo
 	DeleteData(ctx context.Context, Id,Email string) (*model.Delete)
 	UpdateData(ctx context.Context, Email,Id,FinishedCondition,Note string) *model.Update
+	GetfilterData(ctx context.Context, Email,Status,FinishedCondition string) *model.GetFilter
 }
 type todoService struct {
 }

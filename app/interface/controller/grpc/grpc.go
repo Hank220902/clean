@@ -11,9 +11,10 @@ import (
 	"clean/app/usecase/todo/create"
 	"clean/app/usecase/todo/delete"
 	"clean/app/usecase/todo/getall"
+	"clean/app/usecase/todo/getfilter"
 	"clean/app/usecase/todo/update"
-	"clean/app/usecase/user/register"
 	"clean/app/usecase/user/login"
+	"clean/app/usecase/user/register"
 	"net"
 
 	"google.golang.org/grpc"
@@ -30,10 +31,11 @@ func GrpcServer() {
 	NewLoginUsecase := login.NewLgoinUsecase(NewUserRepo, NewUserService)
 	NewCreateUsecase := create.NewCreateUsecase(NewRepo, NewService)
 	NewGetAllUsecase := getall.NewGetAllUsecase(NewRepo, NewService)
+	NewGetFilterUsecase := getfilter.NewGetFilterUsecase(NewRepo, NewService)
 	NewDeleteUsecase := delete.NewDeleteUsecase(NewRepo, NewService)
 	NewUpdaeteUsecase := update.NewUpdateUsecase(NewRepo, NewService)
-	pb.RegisterTodoServiceServer(rpcs, todo.NewTodoServer(NewCreateUsecase, NewGetAllUsecase, NewDeleteUsecase, NewUpdaeteUsecase))
-	pb.RegisterUserServiceServer(rpcs, user.NewUserServer(NewRegisterUsecase,NewLoginUsecase))
+	pb.RegisterTodoServiceServer(rpcs, todo.NewTodoServer(NewCreateUsecase, NewGetAllUsecase, NewDeleteUsecase, NewUpdaeteUsecase,NewGetFilterUsecase))
+	pb.RegisterUserServiceServer(rpcs, user.NewUserServer(NewRegisterUsecase, NewLoginUsecase))
 	lis, err := net.Listen("tcp", ":50051")
 	if err != nil {
 		panic(err)

@@ -50,6 +50,19 @@ func GetAll(ctx context.Context, in *GetAllInput)*pb.GetResponse{
 	return result
 }
 
+func GetFilter(ctx context.Context,in *GetFilterInput)*pb.GetFilterResponse{
+	result,err := todoClient.GetFilter(ctx,&pb.GetFilterRequest{
+		Status: in.Status,
+		Email: in.Email,
+		FinishedCondition: in.FinishedCondition,
+	})
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println(result.GetGetResult())
+	return result
+}
+
 func Delete(ctx context.Context, in *DeleteInput)*pb.DeleteResponse{
 	result,err :=todoClient.Delete(ctx,&pb.DeleteRequest{
 		Id: in.Id,

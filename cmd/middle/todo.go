@@ -1,18 +1,18 @@
 package middle
 
 import (
-	client "clean/app/interface/controller/client/todo"
 	"clean/app/infra/token/jwt"
+	client "clean/app/interface/controller/client/todo"
 
 	"context"
 
 	"github.com/kataras/iris/v12"
 )
 
-const(
-	success int = 1
-	fail int =2
-	tokenError int = 3
+const (
+	success     int = 1
+	fail        int = 2
+	tokenError  int = 3
 	emailExists int = 4
 )
 
@@ -57,6 +57,26 @@ func GetAll(ctx iris.Context) {
 	}
 
 	result := client.GetAll(requestContext(ctx), &input)
+
+	ctx.JSON(result)
+}
+
+func GetFilter(ctx iris.Context) {
+	email := jwt.MyAuthenticatedHandler(ctx)
+	if email == "token not found" {
+		ctx.JSON(tokenError)
+		return
+	}
+	paramsFinishedCondition := ctx.URLParam("finishedCondition")
+	paramsStatus := ctx.URLParam("status")
+
+	input := client.GetFilterInput{
+		Email: email,
+		FinishedCondition: paramsFinishedCondition,
+		Status: paramsStatus,
+	}
+
+	result := client.GetFilter(requestContext(ctx), &input)
 
 	ctx.JSON(result)
 }

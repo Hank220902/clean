@@ -6,6 +6,7 @@ import (
 	"clean/app/usecase/todo/delete"
 	"clean/app/usecase/todo/getall"
 	"clean/app/usecase/todo/update"
+	"clean/app/usecase/todo/getfilter"
 	"time"
 )
 
@@ -17,11 +18,20 @@ func convertToCreateInput(in *pb.CreateRequest) *create.CreateInput {
 		Email:             in.Email,
 		CreateTime:        time.Now().Format(time.RFC3339),
 	}
+	
 }
 
 func convertToGetAllInput(in *pb.GetRequest) *getall.GetAllInput {
 	return &getall.GetAllInput{
 		Email: in.Email,
+	}
+}
+
+func convertToGetFilterInput(in *pb.GetFilterRequest) *getfilter.GetFilterInput {
+	return &getfilter.GetFilterInput{
+		Email: in.Email,
+		Status: in.Status,
+		FinishedCondition: in.FinishedCondition,
 	}
 }
 

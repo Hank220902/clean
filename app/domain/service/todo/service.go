@@ -11,10 +11,13 @@ func (u *todoService) CreateData(ctx context.Context, Matter, EndTime, FinishedC
 	var CreateData = new(model.Create)
 	CreateData.Matter = Matter
 	CreateData.CreateTime = time.Now()
+	fmt.Println(EndTime)
 	emdTimeResult, err := time.Parse(time.RFC3339, EndTime)
 	if err != nil {
 		fmt.Println(err)
 	}
+
+	
 	CreateData.EndTime = emdTimeResult
 	CreateData.FinishedCondition = FinishedCondition
 	CreateData.Email = Email
@@ -36,4 +39,12 @@ func (u *todoService)UpdateData(ctx context.Context, Email,Id,FinishedCondition,
 	update.ID= Id
 	update.Note= Note
 	return update
+}
+
+func (u *todoService)GetfilterData(ctx context.Context,Email,Status,FinishedCondition string)(*model.GetFilter){
+	var filterData = new(model.GetFilter)
+	filterData.Email= Email
+	filterData.FinishedCondition= FinishedCondition
+	filterData.Status = Status
+	return filterData
 }

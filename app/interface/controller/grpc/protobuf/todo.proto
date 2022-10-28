@@ -19,15 +19,15 @@ message CreateResponse {
     int32 resMessage =1;
 }
 
-// message GetFilterRequest{
-//   string email=1;
-//   string status=2;
-//   string finishedCondition =3;
+message GetFilterRequest{
+  string email=1;
+  string status=2;
+  string finishedCondition =3;
 
-// }
-// message GetFilterResponse {
-//   repeated GetResult GetResult=1;
-// }
+}
+message GetFilterResponse {
+  repeated GetResult GetResult=1;
+}
 
 message GetRequest {
   string email=1;
@@ -75,5 +75,5 @@ service TodoService {
   rpc GetAll(GetRequest) returns (GetResponse);
   rpc Update(UpdateRequest) returns (UpdateResponse);
   rpc Delete(DeleteRequest) returns (DeleteResponse);
-  // rpc GetFilter(GetFilterRequest) returns (GetFilterResponse);
+  rpc GetFilter(GetFilterRequest) returns (GetFilterResponse);
 }

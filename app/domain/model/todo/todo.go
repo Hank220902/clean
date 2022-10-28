@@ -23,6 +23,13 @@ type Get struct {
 	UpdateTime        time.Time `json:"updateTime" bson:"updateTime"`
 }
 
+type GetFilter struct {
+	Email             string    `json:"email" bson:"email"`
+	Status            string    `json:"status" bson:"status"`
+	FinishedCondition string    `json:"finishedCondition" bson:"finishedCondition"`
+
+}
+
 type UpdateStatus struct {
 	ID                string    `json:"_id" bson:"_id"`
 	Matter            string    `json:"matter" bson:"matter"`

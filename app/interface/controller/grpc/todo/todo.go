@@ -31,6 +31,14 @@ func (s *todoServer) GetAll(ctx context.Context, data *pb.GetRequest) (*pb.GetRe
 	return &pb.GetResponse{GetResult: convertGetTodosToPb(result)}, nil
 }
 
+func (s *todoServer) GetFilter(ctx context.Context, data *pb.GetFilterRequest)(*pb.GetFilterResponse, error){
+	result, err := s.getFilterUsecase.GetFilter(ctx,convertToGetFilterInput(data))
+	if err != nil {
+		return new(pb.GetFilterResponse), err
+	}
+	return &pb.GetFilterResponse{GetResult: convertGetFilterTodosToPb(result)},nil
+}
+
 func (s *todoServer) Delete(ctx context.Context, data *pb.DeleteRequest) (*pb.DeleteResponse, error) {
 	result, err := s.deleteUsecase.Delete(ctx, convertToDeleteInput(data))
 	if err != nil {
