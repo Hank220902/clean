@@ -71,9 +71,9 @@ func GetFilter(ctx iris.Context) {
 	paramsStatus := ctx.URLParam("status")
 
 	input := client.GetFilterInput{
-		Email: email,
+		Email:             email,
 		FinishedCondition: paramsFinishedCondition,
-		Status: paramsStatus,
+		Status:            paramsStatus,
 	}
 
 	result := client.GetFilter(requestContext(ctx), &input)
@@ -87,11 +87,13 @@ func Delete(ctx iris.Context) {
 		ctx.JSON(tokenError)
 		return
 	}
-	var Input client.DeleteInput
-	if err := ctx.ReadJSON(&Input); err != nil {
-		panic(err.Error())
-	}
+	// var Input client.DeleteInput
+	// if err := ctx.ReadJSON(&Input); err != nil {
+	// 	panic(err.Error())
+	// }
+
 	paramsId := ctx.URLParam("id")
+
 	data := client.DeleteInput{
 		Id:    paramsId,
 		Email: email,
@@ -118,5 +120,5 @@ func Update(ctx iris.Context) {
 		Note:              Input.Note,
 	}
 	result := client.Update(requestContext(ctx), &data)
-	ctx.JSON(result)
+	ctx.JSON(result.ResMessage)
 }
