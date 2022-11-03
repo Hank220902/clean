@@ -87,10 +87,7 @@ func Delete(ctx iris.Context) {
 		ctx.JSON(tokenError)
 		return
 	}
-	// var Input client.DeleteInput
-	// if err := ctx.ReadJSON(&Input); err != nil {
-	// 	panic(err.Error())
-	// }
+
 
 	paramsId := ctx.URLParam("id")
 
